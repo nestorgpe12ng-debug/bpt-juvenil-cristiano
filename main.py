@@ -3,6 +3,9 @@ from telebot import TeleBot
 import os
 import openai
 
+port = int(os.environ.get("PORT", 5000))
+app.run(host="0.0.0.0", port=port)
+
 app = Flask(__name__)
 
 TOKEN = os.environ.get("TOKEN")
@@ -33,4 +36,4 @@ def responder(message):
         bot.reply_to(message, respuesta_texto)
 
 if __name__ == '__main__':
-    bot.polling()
+    bot.infinity_polling()
