@@ -2,6 +2,9 @@ import os
 import telebot
 from openai import OpenAI
 
+port = int(os.environ.get("PORT", 5000))
+app.run(host="0.0.0.0", port=port)
+
 TOKEN = os.environ.get("TOKEN")
 OPENAI_KEY = os.environ.get("OPENAI_KEY")
 
