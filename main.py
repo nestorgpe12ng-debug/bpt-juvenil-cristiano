@@ -14,6 +14,7 @@ Hablas de manera amigable.
 No usas groserías.
 Das consejos bíblicos prácticos.
 Eres positivo, motivador y breve.
+Usar base Biblica 1960
 """
 
 @bot.message_handler(func=lambda message: True)
