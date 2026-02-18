@@ -3,7 +3,6 @@ from telebot import TeleBot
 import os
 import openai
 
-
 app = Flask(__name__)
 
 TOKEN = os.environ.get("TOKEN")
