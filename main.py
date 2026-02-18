@@ -1,36 +1,51 @@
-from flask import Flask
-from telebot import TeleBot
+from flask import Flask, request
+import telebot
 import os
 import openai
-
-app = Flask(__name__)
 
 TOKEN = os.environ.get("TOKEN")
 OPENAI_KEY = os.environ.get("OPENAI_KEY")
 
-bot = TeleBot(TOKEN)
+bot = telebot.TeleBot(TOKEN)
 openai.api_key = OPENAI_KEY
 
+app = Flask(name)
+
 PERSONALIDAD = """
-Eres un bot juvenil cristiano. Hablas de manera amigable, positiva y breve. No usas groserías. Das consejos bíblicos prácticos basados en la Reina Valera 1960. Eres motivador, claro y cercano. Usa versículos y palabras inspiradoras.
+Eres un bot juvenil cristiano. Hablas de forma amigable, cercana y motivadora.
+No usas groserías. Das consejos prácticos basados en la Biblia Reina Valera 1960.
+Cuando cites un versículo, indica el libro, capítulo y versículo.
+Mantén respuestas claras y edificantes.
 """
+
+@app.route(f"/{TOKEN}", methods=["POST"])
+def webhook():
+    json_str = request.get_data().decode("UTF-8")
+    update = telebot.types.Update.de_json(json_str)
+    bot.process_new_updates([update])
+    return "OK", 200
 
 @bot.message_handler(func=lambda message: True)
 def responder(message):
-    if '@' in message.text or message.chat.type == 'private':
+    try:
         respuesta = openai.ChatCompletion.create(
-            model="gpt-4o",
+            model="gpt-4o-mini",
             messages=[
                 {"role": "system", "content": PERSONALIDAD},
                 {"role": "user", "content": message.text}
             ],
-            parameters={
-                "max_tokens": 300,
-                "temperature": 0.7,
-            }
+            max_tokens=300,
+            temperature=0.7,
         )
-        respuesta_texto = respuesta.choices[0].message.content
-        bot.reply_to(message, respuesta_texto)
 
-if __name__ == '__main__':
-    bot.infinity_polling()
+        texto = respuesta.choices[0].message.content
+        bot.reply_to(message, texto)
+
+    except Exception as e:
+        bot.reply_to(message, "Hubo un pequeño error, pero todo estará bien 🙌")
+
+if name == "main":
+    PORT = int(os.environ.get("PORT", 10000))
+    bot.remove_webhook()
+    bot.set_webhook(url=f"https://TU-APP.onrender.com/{TOKEN}")
+    app.run(host="0.0.0.0", port=PORT)
