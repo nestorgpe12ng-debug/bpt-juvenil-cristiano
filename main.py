@@ -47,5 +47,5 @@ def responder(message):
 if name == "main":
     PORT = int(os.environ.get("PORT", 10000))
     bot.remove_webhook()
-    bot.set_webhook(url=f"https://TU-APP.onrender.com/{TOKEN}")
+    bot.set_webhook(url=f"https://bpt-juvenil-cristiano.onrender.com/{TOKEN}")
     app.run(host="0.0.0.0", port=PORT)
