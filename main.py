@@ -9,8 +9,6 @@ OPENAI_KEY = os.environ.get("OPENAI_KEY")
 bot = telebot.TeleBot(TOKEN)
 openai.api_key = OPENAI_KEY
 
-app = Flask(name)
-
 PERSONALIDAD = """
 Eres un bot juvenil cristiano. Hablas de forma amigable, cercana y motivadora.
 No usas groserías. Das consejos prácticos basados en la Biblia Reina Valera 1960.
