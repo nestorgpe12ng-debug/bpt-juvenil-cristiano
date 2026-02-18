@@ -41,9 +41,3 @@ def responder(message):
 
     except Exception as e:
         bot.reply_to(message, "Hubo un pequeño error, pero todo estará bien 🙌")
-
-if name == "main":
-    PORT = int(os.environ.get("PORT", 10000))
-    bot.remove_webhook()
-    bot.set_webhook(url=f"https://bpt-juvenil-cristiano.onrender.com/{TOKEN}")
-    app.run(host="0.0.0.0", port=PORT)
